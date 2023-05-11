@@ -1,0 +1,48 @@
+stages:
+  - deploy
+
+deploy to dev:
+  stage: deploy
+  environment:
+    name: dev
+    url: https://s3.console.aws.amazon.com/s3/buckets/courses-elementary-dev
+  image: quay.io/coreos/awscli
+  script:
+    - aws s3 sync . s3://$DEV_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude ".git*" --exclude ".gitlab-ci.yml" --exclude "README.md" --exclude "node_modules/**/*" --exclude ".tmp" --exclude ".DS_Store" --exclude "thumbs.db" --exclude "*.scssc" --exclude ".sass-cache" --exclude "*.komodoproject" --exclude ".komodotools" --exclude ".sublime-project" --exclude ".sublime-workspace" --exclude ".vscode" --exclude "webpack/*" --exclude "*.html" --exclude "*.json"
+    - aws s3 sync . s3://$DEV_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.html" --content-type="text/html;charset=utf-8"
+    - aws s3 sync . s3://$DEV_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.json" --exclude="package.json" --exclude="package-lock.json" --content-type="application/json"
+  only:
+    - master
+  when: manual
+
+deploy to qa:
+  stage: deploy
+  environment:
+    name: qa
+    url: https://s3.console.aws.amazon.com/s3/buckets/courses-elementary-qa
+  image: quay.io/coreos/awscli
+  script:
+    - aws s3 sync . s3://$QA_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude ".git*" --exclude ".gitlab-ci.yml" --exclude "README.md" --exclude "node_modules/**/*" --exclude ".tmp" --exclude ".DS_Store" --exclude "thumbs.db" --exclude "*.scssc" --exclude ".sass-cache" --exclude "*.komodoproject" --exclude ".komodotools" --exclude ".sublime-project" --exclude ".sublime-workspace" --exclude ".vscode" --exclude "webpack/*" --exclude "*.html" --exclude "*.json"
+    - aws s3 sync . s3://$QA_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.html" --content-type="text/html;charset=utf-8"
+    - aws s3 sync . s3://$QA_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.json" --exclude="package.json" --exclude="package-lock.json" --content-type="application/json"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - directory/*
+      when: always
+    - when: manual
+      allow_failure: true 
+
+deploy to production:
+  stage: deploy
+  environment:
+    name: production
+    url: https://s3.console.aws.amazon.com/s3/buckets/courses-elementary-prod
+  image: quay.io/coreos/awscli
+  script:
+    - aws s3 sync . s3://$PROD_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude ".git*" --exclude ".gitlab-ci.yml" --exclude "README.md" --exclude "node_modules/**/*" --exclude ".tmp" --exclude ".DS_Store" --exclude "thumbs.db" --exclude "*.scssc" --exclude ".sass-cache" --exclude "*.komodoproject" --exclude ".komodotools" --exclude ".sublime-project" --exclude ".sublime-workspace" --exclude ".vscode" --exclude "webpack/*" --exclude "*.html" --exclude "*.json"
+    - aws s3 sync . s3://$PROD_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.html" --content-type="text/html;charset=utf-8"
+    - aws s3 sync . s3://$PROD_BUCKET_NAME/$CI_PROJECT_NAME --delete --exclude "*" --include "*.json" --exclude="package.json" --exclude="package-lock.json" --content-type="application/json"
+  only:
+    - master
+  when: manual

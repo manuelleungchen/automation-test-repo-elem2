@@ -1,0 +1,25 @@
+{
+    "iloStartLink": "Enter interactive activity Matching or press link to skip to end of activity.",
+    "iloStartText": "Beginning of Matching interactive activity.",
+    "iloEndLink": "Press link to return to start of interactive activity Matching.",
+    "iloEndText": "End of Matching interactive activity.",
+    "pairs": 3,
+    "useRandomPairs": true,
+    "shuffleColumns": true,
+    "successMessage": "You did it! Way to go!",
+    "basePath": "../assets/img",
+    "columnRatio": "1:2",
+    "items": [{
+            "first": ["arda1_08.201a.svg", "A person has their arms and legs spread out to form an X.", ""],
+            "second": ["", "", "small"]
+        },
+        {
+            "first": ["arda1_08.201b.svg", "A person is seated with their upper body twisted to one side.", ""],
+            "second": ["", "", "straight"]
+        },
+        {
+            "first": ["arda1_08.201c.svg", "A person is crouched while bending at the waist to stretch one hand towards the ground.", ""],
+            "second": ["", "", "stretching"]
+        }
+    ]
+}

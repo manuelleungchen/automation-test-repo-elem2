@@ -1,0 +1,15 @@
+{
+    "iloStartLink": "Enter interactive activity Fill in the Blanks or press link to skip to end of activity.",
+    "iloStartText": "Beginning of Fill in the Blanks interactive activity.",
+    "iloEndLink": "Press link to return to start of interactive activity Fill in the Blanks.",
+    "iloEndText": "End of Fill in the Blanks interactive activity.",
+    "type": "sentence",
+    "ariaQuestionPrompt": "Fill in the blank",
+    "entries": [{
+        "entry": "Rolling is an example of a $answer0 movement."
+    }],
+    "answers": [
+        "locomotor",
+        "non-locomotor"
+    ]
+}
